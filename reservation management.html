@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reservation Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h2>My Reservations</h2>
+    
+    <div class="management-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Parking Spot</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Spot #32</td>
+                    <td>10:00 AM</td>
+                    <td>12:00 PM</td>
+                    <td class="status-reserved">Reserved</td>
+                    <td>
+                        <button class="action-btn view-btn">View</button>
+                        <button class="action-btn extend-btn">Extend</button>
+                        <button class="action-btn cancel-btn">Cancel</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
