@@ -4,45 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservation Form</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    
+   
+    <div class="reservation-container">
+        <h2>Parking Reservation Form</h2>
 
-    <h2>Parking Reservation Form</h2>
+        
+        <p class="error-message" id="formMessage" style="display: none;"></p>
 
-    <!-- Reservation Form -->
-    <form id="reservationForm">
+        <!-- Reservation Form -->
+        <form id="reservationForm">
 
-        <!-- Building Selection -->
-        <label for="building">Select Building:</label>
-        <select id="building" name="building" required>
-            <option value="">-- Choose Building --</option>
-            <option value="1">Building 1</option>
-            <option value="2">Building 2</option>
-            <option value="3">Building 3</option>
-            <option value="4">Building 4</option>
-        </select>
-        <br><br>
+            <!-- Building Selection -->
+            <label for="building">Select Building:</label>
+            <select id="building" name="building" required>
+                <option value="">-- Choose Building --</option>
+                <option value="1">Building 1 (Library)</option>
+                <option value="2">Building 2 (Admin)</option>
+                <option value="3">Building 3 (Faculty)</option>
+                <option value="4">Building 4 (IT)</option>
+            </select>
+            <br><br>
 
-        <!-- Spot Selection -->
-        <label for="spot">Available Parking Spots (SpotID):</label>
-        <select id="spot" name="spot" required>
-            <option value="">-- Choose Spot --</option>
-        </select>
-        <br><br>
+            <!-- Spot Selection -->
+            <label for="spot">Available Parking Spots (SpotID):</label>
+            <select id="spot" name="spot" required>
+                <option value="">-- Choose Spot --</option>
+            </select>
+            <br><br>
 
-        <!-- Reservation Time -->
-        <label for="start">Start Time:</label>
-        <input type="datetime-local" id="start" name="start" required>
+            <!-- Reservation Time -->
+            <label for="start">Start Time:</label>
+            <input type="datetime-local" id="start" name="start" required>
 
-        <br><br>
+            <br><br>
 
-        <label for="end">End Time:</label>
-        <input type="datetime-local" id="end" name="end" required>
+            <label for="end">End Time:</label>
+            <input type="datetime-local" id="end" name="end" required>
 
-        <br><br>
+            <br><br>
 
-        <button type="submit">Reserve</button>
-    </form>
+            <button type="submit">Reserve</button>
+        </form>
+    </div>
 
     <script>
         // Parking spots linked to buildings 1–4
@@ -52,6 +59,18 @@
             "3": ["3-01", "3-02", "3-03", "3-04"],
             "4": ["4-01"]
         };
+
+        const formMessage = document.getElementById("formMessage");
+
+        // Helper function to display messages
+        function displayMessage(text, isError = true) {
+            formMessage.textContent = text;
+            // Use the error-message class for errors, otherwise use success style (green text)
+            formMessage.className = isError ? "error-message" : "success-message";
+            // Ensure the success-message has a temporary style if it's not defined in styles.css
+            formMessage.style.color = isError ? "#dc3545" : "#28a745"; 
+            formMessage.style.display = 'block';
+        }
 
         // Populate spot list when building is chosen
         document.getElementById("building").addEventListener("change", function() {
@@ -70,26 +89,41 @@
             }
         });
 
-        // Validation
+        // Validation Logic
         document.getElementById("reservationForm").addEventListener("submit", function(e) {
-            const start = new Date(document.getElementById("start").value);
-            const end = new Date(document.getElementById("end").value);
+            e.preventDefault(); // Prevent default submission initially
+            formMessage.style.display = 'none'; // Hide previous messages
+
+            const startValue = document.getElementById("start").value;
+            const endValue = document.getElementById("end").value;
+            
+            // Check if both fields were filled (HTML handles 'required', but good for date types)
+            if (!startValue || !endValue) {
+                displayMessage("Please fill in both start and end times.");
+                return;
+            }
+
+            const start = new Date(startValue);
+            const end = new Date(endValue);
             const now = new Date();
 
+            // Check 1: Must be made at least 30 minutes in advance.
             const diffMinutes = (start - now) / (1000 * 60);
             if (diffMinutes < 30) {
-                alert("Reservation must be made at least 30 minutes in advance.");
-                e.preventDefault();
+                displayMessage("Reservation must be made at least 30 minutes in advance.");
                 return;
             }
 
+            // Check 2: End time must be after start time.
             if (end <= start) {
-                alert("End time must be after start time.");
-                e.preventDefault();
+                displayMessage("End time must be after start time.");
                 return;
             }
 
-            alert("Reservation submitted successfully!");
+            // If all checks pass:
+            displayMessage("Reservation submitted successfully! (Simulated)", false); 
+            // In a real application, you would add your Fetch/AJAX call to the backend here
+            // e.g., fetch('/api/reserve', { method: 'POST', body: formData })...
         });
     </script>
 
