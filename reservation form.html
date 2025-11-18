@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Form</title>
+</head>
+<body>
+
+    <h2>Parking Reservation Form</h2>
+
+    <!-- Reservation Form -->
+    <form id="reservationForm">
+
+        <!-- Building Selection -->
+        <label for="building">Select Building:</label>
+        <select id="building" name="building" required>
+            <option value="">-- Choose Building --</option>
+            <option value="1">Building 1</option>
+            <option value="2">Building 2</option>
+            <option value="3">Building 3</option>
+            <option value="4">Building 4</option>
+        </select>
+        <br><br>
+
+        <!-- Spot Selection -->
+        <label for="spot">Available Parking Spots (SpotID):</label>
+        <select id="spot" name="spot" required>
+            <option value="">-- Choose Spot --</option>
+        </select>
+        <br><br>
+
+        <!-- Reservation Time -->
+        <label for="start">Start Time:</label>
+        <input type="datetime-local" id="start" name="start" required>
+
+        <br><br>
+
+        <label for="end">End Time:</label>
+        <input type="datetime-local" id="end" name="end" required>
+
+        <br><br>
+
+        <button type="submit">Reserve</button>
+    </form>
+
+    <script>
+        // Parking spots linked to buildings 1–4
+        const parkingSpots = {
+            "1": ["1-01", "1-02", "1-03"],
+            "2": ["2-01", "2-02"],
+            "3": ["3-01", "3-02", "3-03", "3-04"],
+            "4": ["4-01"]
+        };
+
+        // Populate spot list when building is chosen
+        document.getElementById("building").addEventListener("change", function() {
+            const building = this.value;
+            const spotSelect = document.getElementById("spot");
+
+            spotSelect.innerHTML = '<option value="">-- Choose Spot --</option>';
+
+            if (parkingSpots[building]) {
+                parkingSpots[building].forEach(spot => {
+                    let option = document.createElement("option");
+                    option.value = spot;
+                    option.textContent = spot;
+                    spotSelect.appendChild(option);
+                });
+            }
+        });
+
+        // Validation
+        document.getElementById("reservationForm").addEventListener("submit", function(e) {
+            const start = new Date(document.getElementById("start").value);
+            const end = new Date(document.getElementById("end").value);
+            const now = new Date();
+
+            const diffMinutes = (start - now) / (1000 * 60);
+            if (diffMinutes < 30) {
+                alert("Reservation must be made at least 30 minutes in advance.");
+                e.preventDefault();
+                return;
+            }
+
+            if (end <= start) {
+                alert("End time must be after start time.");
+                e.preventDefault();
+                return;
+            }
+
+            alert("Reservation submitted successfully!");
+        });
+    </script>
+
+</body>
+</html>
