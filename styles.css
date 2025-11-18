@@ -3,31 +3,34 @@
 /* --- General & Shared Styles --- */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #e8e8e8; /* Lighter background */
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    /* Center the login box on the page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh
 }
 h2 {
     text-align: center;
-    color: #333;
-    margin-bottom: 20px;
+    color: #004d40; /* UQU Dark Green */
+    margin-bottom: 30px;
 }
 label {
     display: block;
     margin-top: 15px;
     font-weight: bold;
+
 }
 input[type="text"], 
 input[type="password"],
 input[type="date"], 
 input[type="time"], 
 select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    box-sizing: border-box;
+    /* ... existing styles ... */
     border: 1px solid #ccc;
-    border-radius: 4px;
+    transition: border-color 0.3s;
 }
 button {
     padding: 10px 20px;
@@ -38,29 +41,63 @@ button {
     color: white;
     width: 100%;
     box-sizing: border-box;
+    transition: background-color 0.3s;
 }
 
 /* --- Login Page Styles --- */
 .login-container {
     background: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    margin: 50px auto; /* Center the login box */
+    padding: 40px; /* More padding for a premium look */
+    border-radius: 12px; /* Slightly rounder corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow */
+    width: 320px; 
+    /* Remove 'margin: 50px auto;' because body is centering it */
 }
 #loginForm button {
-    background-color: #0056b3; /* Blue for login */
+    background-color: #004d40; /* UQU Primary Color */
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+#loginForm button:hover {
+    background-color: #00796b; /* Slightly lighter green on hover */
 }
 .error-message {
     color: #dc3545;
-    background-color: #ffe0e0;
     text-align: center;
-    margin-top: 10px;
+    background-color: #ffe0e0;
+    /* ... existing styles ... */
+    margin-bottom: 20px;
     padding: 10px;
     border: 1px solid #dc3545;
     border-radius: 4px;
-    display: none; /* JS will change this to block when needed */
+    display: none;
+}
+
+
+/* --- UQU Logo Styling (NEW) --- */
+.logo-placeholder {
+    height: 70px;
+    width: 70px;
+    margin: 0 auto 20px auto;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #004d40;
+    font-weight: bold;
+    font-size: 14px;
+}
+.logo-placeholder img {
+    max-width: 100px; 
+    height: auto;
+    display: block; /* Helps in centering */
+    margin: 0 auto;
+
+}
+input:focus {
+    border-color: #004d40; /* Focus highlight with UQU Green */
+    outline: none;
 }
 
 /* --- Reservation Form Styles --- */
